@@ -14,6 +14,10 @@
 
 int authenticate(int client_fd);
 int check_user_credentials(const char *username, const char *password);
+int authenticate_test(int client_fd);
+int check_user_credentials_test(const char *username, const char *password);
+
+
 
 #endif
 
