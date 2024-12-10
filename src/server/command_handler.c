@@ -1,4 +1,5 @@
 #include <sys/stat.h>
+#include <time.h> 
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -30,6 +31,8 @@ void file_transfer(int c_fd)
 	char write_buf[1024] = "";
 	int read_size = 0;
 	int write_size = 0;
+	clock_t start_time, end_time;
+    	double time_taken;
 
 	// 主循环，持续接收并处理客户端消息
 	while (1)
@@ -52,6 +55,9 @@ void file_transfer(int c_fd)
 			file_flag = 0;
 			close(fd1);
 			printf("file load finish!\n");
+			end_time = clock();
+			time_taken = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+                        printf("File transfer took %f seconds.\n", time_taken);
 		}
 		// 如果正在进行文件传输，写入文件
 		else if (file_flag == 1)
@@ -66,6 +72,7 @@ void file_transfer(int c_fd)
 		// 如果接收到 "file start" 消息，表示开始传输文件
 		else if ((file_loop = strstr(read_buf, "file start")) != NULL)
 		{
+			start_time = clock();
 			file_flag = 1;
 			file_loop += strlen("file start"); // 跳过 "file start"
 			printf("loading file: %s\n", file_loop);
@@ -103,6 +110,7 @@ void file_transfer(int c_fd)
 		// 处理 "scp" 命令，文件传输
 		else if ((str_loop = strstr(read_buf, "scp")) != NULL)
 		{
+			start_time = clock();
 			str_loop += 3; // 跳过 "scp"
 			printf("finding file: %s\n", str_loop);
 			memset(ret, '\0', 1024);
@@ -165,6 +173,9 @@ void file_transfer(int c_fd)
 					printf("write error!\n");
 				}
 				printf("file load finish!\n");
+				end_time = clock();
+				time_taken = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+                        	printf("File transfer took %f seconds.\n", time_taken);
 			}
 			close(fd1);
 		}
