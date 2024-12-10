@@ -62,7 +62,7 @@ int main() {
     printf("Connected to server. Starting file transfer...\n");
 
     // 调用 send_file 函数上传文件
-    send_file(sockfd, "file_test.txt");
+    send_file(sockfd, "../src/client/clock2.txt");
 
     // 关闭连接
     close(sockfd);
