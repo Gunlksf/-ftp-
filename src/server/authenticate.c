@@ -112,7 +112,7 @@ int authenticate_test(int client_fd)
     printf("接收到密码: %s\n", password);  // 打印接收到的密码
 
     // 检查用户名和密码是否匹配
-    if (check_user_credentials(username, password))
+    if (check_user_credentials_test(username, password))
     {
         send(client_fd, "用户认证成功\n", 26, 0);
         return 1;  // 认证成功
