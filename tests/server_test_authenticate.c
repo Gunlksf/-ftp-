@@ -55,7 +55,7 @@ int main()
     }
 
     // 执行用户认证
-    if (authenticate(client_fd))
+    if (authenticate_test(client_fd))
     {
         printf("用户认证成功\n");
     }
